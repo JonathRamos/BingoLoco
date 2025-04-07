@@ -1,51 +1,34 @@
 import streamlit as st
 import random
+from PIL import Image
 
+# Configuración de la página
 st.set_page_config(page_title="Color War Bingo Loco", layout="centered")
 
-# Title
-st.markdown("<h1 style='text-align: center; color: #003366;'>🎉 Color War Bingo Loco 🎉</h1>",
+# Cargar el logo del campamento
+# Asegúrate de subir el archivo .jpg con el logo al directorio del proyecto
+logo_path = "path_to_logo.jpg"
+logo = Image.open(logo_path)
+st.image(logo, use_column_width=True)
+
+# Título
+st.markdown("<h1 style='text-align: center; color: #FF5733;'>Color War Bingo Loco</h1>",
             unsafe_allow_html=True)
 
-# Initialize session state
-if 'called_numbers' not in st.session_state:
-    st.session_state.called_numbers = []
-if 'last_number' not in st.session_state:
-    st.session_state.last_number = None
+# Generar número aleatorio
+if 'number' not in st.session_state:
+    st.session_state.number = random.randint(1, 130)
 
-# Buttons
-col1, col2 = st.columns(2)
-with col1:
-    if st.button("🎲 Call Next Number"):
-        remaining = list(set(range(1, 131)) -
-                         set(st.session_state.called_numbers))
-        if remaining:
-            new_number = random.choice(remaining)
-            st.session_state.called_numbers.append(new_number)
-            st.session_state.last_number = new_number
-        else:
-            st.warning("All numbers have been called!")
+# Mostrar número en grande
+st.markdown(
+    f"<h1 style='text-align: center; font-size: 100px; color: #3498db;'>{st.session_state.number}</h1>", unsafe_allow_html=True)
 
-with col2:
-    if st.button("🔁 Reset Game"):
-        st.session_state.called_numbers = []
-        st.session_state.last_number = None
+# Botón para generar nuevo número
+if st.button('Get New Number', key='new_number', help="Generates a random number for bingo!", style="background-color: #FF5733; color: white; padding: 10px 20px; font-size: 20px;"):
+    st.session_state.number = random.randint(1, 130)
+    st.experimental_rerun()
 
-# Display last number
-st.markdown("---")
-if st.session_state.last_number is not None:
-    st.markdown(
-        f"<h2 style='text-align: center; font-size: 60px; color: #FF3333;'>🎯 {st.session_state.last_number}</h2>", unsafe_allow_html=True)
-else:
-    st.markdown("<h3 style='text-align: center; color: gray;'>No number called yet</h3>",
-                unsafe_allow_html=True)
-
-# Show called numbers
-st.markdown("### Numbers Called:")
-called = sorted(st.session_state.called_numbers)
-if called:
-    st.markdown(
-        f"<div style='text-align: center;'>{', '.join(str(num) for num in called)}</div>", unsafe_allow_html=True)
-else:
-    st.markdown("<div style='text-align: center;'>None yet</div>",
-                unsafe_allow_html=True)
+# Botón para reiniciar el número
+if st.button('Reset Number', key='reset', help="Resets the number to a random value", style="background-color: #2ecc71; color: white; padding: 10px 20px; font-size: 20px;"):
+    st.session_state.number = random.randint(1, 130)
+    st.experimental_rerun()
