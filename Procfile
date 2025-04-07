@@ -1,2 +1,1 @@
-web: streamlit run Bingoloco.py --server.port=$PORT
-
+web: streamlit run Bingo_loco.py --server.port=$PORT
