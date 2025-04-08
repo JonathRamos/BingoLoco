@@ -7,7 +7,7 @@ st.set_page_config(page_title="Color War Bingo Loco", layout="centered")
 
 # Cargar el logo del campamento
 # Asegúrate de subir el archivo .jpg con el logo al directorio del proyecto
-logo_path = "path_to_logo.jpg"
+logo_path = "/Users/jonathramos/Desktop/BINGO_LOCO/BingoLoco/IMG_3185.jpg"
 logo = Image.open(logo_path)
 st.image(logo, use_column_width=True)
 
