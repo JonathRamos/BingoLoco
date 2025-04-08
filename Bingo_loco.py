@@ -1,29 +1,54 @@
 import streamlit as st
 import random
-from PIL import Image
 
-# Configuración de la página
-st.set_page_config(page_title="Color War Bingo Loco", layout="centered")
+# Título de la aplicación
+st.title('Color War Bingo Loco')
+
+# Definir los números del bingo
+bingo_numbers = list(range(1, 131))
+
+# Función para generar un número aleatorio
 
 
-# Título
-st.markdown("<h1 style='text-align: center; color: #FF5733;'>Color War Bingo Loco</h1>",
-            unsafe_allow_html=True)
+def draw_number():
+    return random.choice(bingo_numbers)
 
-# Generar número aleatorio
-if 'number' not in st.session_state:
-    st.session_state.number = random.randint(1, 130)
 
-# Mostrar número en grande
+# Encabezado y explicación del juego
+st.header("Instructions")
+st.write(
+    "This is a fun bingo game for Color War! The game will randomly draw numbers between 1 and 130. "
+    "You can use this app to call out numbers for your bingo game during the event."
+)
+
+# Botones para iniciar y detener el sorteo de números
+if st.button('Draw Number'):
+    number = draw_number()
+    bingo_numbers.remove(number)  # Eliminar el número sorteado de la lista
+    st.write(f"The drawn number is: **{number}**")
+
+# Botón para resetear el juego
+if st.button('Reset Game'):
+    bingo_numbers[:] = list(range(1, 131))  # Restaurar la lista original
+    st.write("Game reset. Ready to start again!")
+
+# Personalización de los botones con CSS
 st.markdown(
-    f"<h1 style='text-align: center; font-size: 100px; color: #3498db;'>{st.session_state.number}</h1>", unsafe_allow_html=True)
-
-# Botón para generar nuevo número
-if st.button('Get New Number', key='new_number', help="Generates a random number for bingo!", style="background-color: #FF5733; color: white; padding: 10px 20px; font-size: 20px;"):
-    st.session_state.number = random.randint(1, 130)
-    st.experimental_rerun()
-
-# Botón para reiniciar el número
-if st.button('Reset Number', key='reset', help="Resets the number to a random value", style="background-color: #2ecc71; color: white; padding: 10px 20px; font-size: 20px;"):
-    st.session_state.number = random.randint(1, 130)
-    st.experimental_rerun()
+    """
+    <style>
+    .stButton>button {
+        background-color: #ff4747;
+        color: white;
+        border-radius: 5px;
+        padding: 10px 20px;
+        font-size: 20px;
+        box-shadow: 0px 4px 6px rgba(0,0,0,0.1);
+        transition: all 0.3s ease;
+    }
+    .stButton>button:hover {
+        background-color: #ff6363;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
