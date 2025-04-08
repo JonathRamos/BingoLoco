@@ -5,11 +5,6 @@ from PIL import Image
 # Configuración de la página
 st.set_page_config(page_title="Color War Bingo Loco", layout="centered")
 
-# Cargar el logo del campamento
-# Asegúrate de subir el archivo .jpg con el logo al directorio del proyecto
-logo_path = "/Users/jonathramos/Desktop/BINGO_LOCO/BingoLoco/IMG_3185.jpg"
-logo = Image.open(logo_path)
-st.image(logo, use_column_width=True)
 
 # Título
 st.markdown("<h1 style='text-align: center; color: #FF5733;'>Color War Bingo Loco</h1>",
